@@ -1,6 +1,6 @@
 {
   "name": "@01/env",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Nodejs env utils",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "source-map-support": "^0.5.12",
-    "tslib":"2.0.1"
+    "tslib": "2.0.1"
   },
   "devDependencies": {
-    "@01/core-utils": "1.0.0",
+    "@01/core-utils": "^1.0.1",
     "@types/node": "14.11.2"
   }
 }
