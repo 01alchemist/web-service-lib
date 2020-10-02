@@ -32,7 +32,7 @@
     "tslib": "2.0.1"
   },
   "devDependencies": {
-    "@01/core-utils": "^1.0.2",
+    "@01/core-utils": "2.0.1",
     "@types/node": "14.11.2"
   },
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
