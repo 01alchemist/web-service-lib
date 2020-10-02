@@ -1,6 +1,6 @@
 {
   "name": "@01/env",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Nodejs env utils",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "tslib": "2.0.1"
   },
   "devDependencies": {
-    "@01/core-utils": "^1.0.1",
+    "@01/core-utils": "^1.0.2",
     "@types/node": "14.11.2"
   },
   "gitHead": "4384e5ed2a6ca9dd6926b36311ee34a6b00f778d"
