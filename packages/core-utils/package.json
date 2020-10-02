@@ -1,0 +1,52 @@
+{
+  "name": "@01/core-utils",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "watch": "nodemon --watch webpack.config.ts ../../scripts/webpack.js --config=webpack.config.ts --watch",
+    "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@sentry/webpack-plugin": "1.10.0",
+    "@types/fs-extra": "9.0.1",
+    "@types/jest": "26.0.14",
+    "@types/node": "14.11.2",
+    "@types/webpack": "4.41.22",
+    "@types/webpack-node-externals": "2.5.0",
+    "chalk": "4.1.0",
+    "eslint": "7.10.0",
+    "eslint-config-prettier": "6.12.0",
+    "eslint-loader": "4.0.2",
+    "fs-extra": "9.0.1",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "jest": "26.4.2",
+    "node-loader": "^1.0.1",
+    "pnp-package-json-webpack-plugin": "^1.0.3",
+    "pnp-webpack-plugin": "1.6.4",
+    "shebang-loader": "^0.0.1",
+    "source-map-support": "0.5.13",
+    "ts-jest": "26.4.1",
+    "ts-loader": "8.0.4",
+    "ts-node": "9.0.0",
+    "tslib": "2.0.1",
+    "typescript": "4.0.3",
+    "webpack": "4.44.2",
+    "webpack-cli": "3.3.12",
+    "webpack-inject-plugin": "1.5.4",
+    "webpack-node-externals": "2.5.2",
+    "webpack-pnp-unplugged-externals": "^1.0.0"
+  }
+}
