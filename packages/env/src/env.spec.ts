@@ -81,7 +81,7 @@ describe("env test suite", () => {
       it("Should return default value", () => {
         delete process.env.JSON_VALUE;
         expect(envJson("JSON_VALUE", { value: true })).toEqual({
-          value: true
+          value: true,
         });
       });
       it("Should return undefined if no default value", () => {
