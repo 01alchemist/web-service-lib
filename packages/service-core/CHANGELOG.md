@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/01alchemist/web-service-lib/compare/@01/service-core@1.0.3...@01/service-core@2.0.1) (2020-10-02)
+
+**Note:** Version bump only for package @01/service-core
+
+
+
+
+
 ## [1.0.3](https://github.com/01alchemist/web-service-lib/compare/@01/service-core@1.0.2...@01/service-core@1.0.3) (2020-10-02)
 
 **Note:** Version bump only for package @01/service-core
