@@ -1,6 +1,9 @@
 {
   "name": "@01/core-utils",
   "version": "2.0.1",
+  "repository": "git@github.com:01alchemist/web-service-lib.git",
+  "author": "Nidin Vinayakan <01@01alchemist.com>",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index",
   "files": [
@@ -10,7 +13,8 @@
     "watch": "nodemon --watch webpack.config.ts ../../scripts/webpack.js --config=webpack.config.ts --watch",
     "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
     "precommit": "lint-staged",
-    "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'"
+    "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'",
+    "publish": "npm publish --access public"
   },
   "lint-staged": {
     "*.js": [
