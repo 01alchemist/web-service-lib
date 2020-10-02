@@ -53,5 +53,9 @@
     "webpack-node-externals": "2.5.2",
     "webpack-pnp-unplugged-externals": "^1.0.0"
   },
+  "devDependencies": {
+    "prettier": "2.1.2",
+    "nodemon": "2.0.4"
+  },
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
 }
