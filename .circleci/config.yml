@@ -37,7 +37,7 @@ references:
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      yarn install --pure-lockfile
+      yarn bootstrap
 
   tools_install: &tools_install
     name: Installing tools
