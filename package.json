@@ -5,11 +5,13 @@
     "packages/*"
   ],
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build --stream",
     "watch": "lerna run watch --stream",
     "start": "lerna run start --stream",
     "test": "lerna run test --stream",
-    "publish": "lerna publish"
+    "publish-report": "./scripts/publish-report",
+    "publish": "lerna publish --github-release --conventional-commits --yes"
   },
   "devDependencies": {
     "lerna": "3.21.0",
