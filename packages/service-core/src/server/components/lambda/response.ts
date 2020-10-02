@@ -2,13 +2,16 @@ import { Response } from "express";
 import { RequestReceipt, RequestStatus } from "./request";
 
 export type LambdaResponse<T> = {
-  statusCode?: number;
+  statusCode: number;
   headers?: { [key: string]: string };
   body: string | Buffer | T;
   warning?: string;
 };
 
-export function sendLambdaResponse<T>(res: Response, response: LambdaResponse<T>): RequestReceipt {
+export function sendLambdaResponse<T>(
+  res: Response,
+  response: LambdaResponse<T>
+): RequestReceipt {
   const { statusCode } = response;
   res.set({ ...response.headers });
   res.status(statusCode).json(response.body);
@@ -18,5 +21,5 @@ export function sendLambdaResponse<T>(res: Response, response: LambdaResponse<T>
       : response.warning
       ? RequestStatus.SUCCESS_WITH_WARNING
       : RequestStatus.SUCCESS;
-  return { status, message: response.warning };
+  return { status, message: response.warning as string };
 }

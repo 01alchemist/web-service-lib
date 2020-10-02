@@ -57,9 +57,9 @@ function startServer(appInstance: Express) {
       fs.openSync("/tmp/app-initialized", "w");
     }
     console.log("\n ✈️ Express server listening at %s:%s", host, port);
-    if (isDev) {
+    const ngrokAuthToken = env("NGROK_TOKEN");
+    if (isDev && ngrokAuthToken) {
       try {
-        const ngrokAuthToken = env("NGROK_TOKEN");
         await ngrok.authtoken(ngrokAuthToken);
         const url = await ngrok.connect(port);
         console.log("|###################################################|");
@@ -91,10 +91,11 @@ function startServer(appInstance: Express) {
       }
     }
   });
+  manageSockets(prevServer);
   return prevServer;
 }
 
-manageSockets(prevServer);
+
 
 // TCP Socket keeper
 let sockets = new Map();
@@ -110,7 +111,7 @@ function manageSockets(server) {
 }
 
 function closeAllConnections() {
-  sockets.forEach((socket, socketId) => {
+  sockets.forEach((socket) => {
     try {
       socket.destroy();
     } catch (e) {
@@ -128,9 +129,6 @@ if (isDev) {
 
       prevServer.close(() => {
         console.log("Old http sever closed");
-        if (prevAppInstance !== null) {
-          prevAppInstance = null;
-        }
         let app = require("./app").default;
         app.create().then((appInstance) => {
           prevAppInstance = appInstance;

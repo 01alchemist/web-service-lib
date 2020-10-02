@@ -1,5 +1,5 @@
 import * as express from "express";
-import { OpenApiValidator } from "express-openapi-validator";
+import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
 import { AutoRouter, AutoRoute, AutoMethod } from "./auto-router";
 import { envInt } from "@01/env";
 let openApiSchema;
@@ -10,12 +10,12 @@ let openApiSchema;
 @AutoRoute({
   path: "/api-docs",
 })
-class ApiDocs {
+export class ApiDocs {
   @AutoMethod({
     private: true,
     tags: ["api-docs"],
   })
-  async get(req, res) {
+  async get(_, res) {
     res.set("Access-Control-Allow-Origin", "*");
     res.json(openApiSchema);
   }
@@ -85,15 +85,17 @@ async function initialize({ app, basePath = "api" }: SwaggerOptions) {
   openApiSchema = schema;
   const openApiRouter = AutoRouter.getRouter();
 
-  const openApiValidator = new OpenApiValidator({
-    apiSpec: schema,
-    validateRequests: true,
-    validateResponses: true,
-  });
-  await openApiValidator.install(app);
+  // Install open api validator middleware
+  app.use(
+    OpenApiValidatorMiddleware({
+      apiSpec: schema,
+      validateRequests: true,
+      validateResponses: true,
+    })
+  );
 
   // tslint:disable-next-line: ter-prefer-arrow-callback
-  const routerWrapper = async (req, res, next) => {
+  const routerWrapper = async (_, res, next) => {
     try {
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
       const MAX_AGE_API = envInt("MAX_AGE_API", 0);

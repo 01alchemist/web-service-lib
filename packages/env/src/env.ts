@@ -15,23 +15,28 @@ export const isNode =
   typeof process !== "undefined" &&
   typeof process.stdout !== "undefined";
 
-export function env(name: string, defaultValue?: string) {
+const U = undefined as unknown;
+type U = undefined;
+
+export function env<T = U>(name: string, defaultValue: T = U as T) {
   const envValue = process.env[name];
   return envValue || defaultValue;
 }
-export function envInt(name: string, defaultValue?: number) {
+
+export function envInt<T = U>(name: string, defaultValue: T = U as T) {
   const envValue = process.env[name];
   return envValue ? parseInt(envValue) : defaultValue;
 }
-export function envFloat(name: string, defaultValue?: number) {
+
+export function envFloat<T = U>(name: string, defaultValue: T = U as T) {
   const envValue = process.env[name];
   return envValue ? parseFloat(envValue) : defaultValue;
 }
-export function envBoolean(name: string, defaultValue?: boolean) {
+export function envBoolean<T = U>(name: string, defaultValue: T = U as T) {
   const envValue = process.env[name];
   return envValue ? envValue === "true" : defaultValue;
 }
-export function envJson(name: string, defaultValue?: any): any {
+export function envJson<T = U>(name: string, defaultValue: T = U as T): any {
   const envValue = process.env[name];
   if (envValue) {
     try {

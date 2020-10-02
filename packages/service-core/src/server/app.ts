@@ -4,7 +4,7 @@ import * as compression from "compression";
 import * as bodyParser from "body-parser";
 import { genRandomString, isOriginAllowed, logVar } from "./utils";
 import { HttpStatus } from "./utils/request";
-import { swagger, AutoRouter } from "./components/auto-router";
+import { swagger } from "./components/auto-router";
 import { env, envJson } from "@01/env";
 import { logger } from "./components/logger";
 
@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
-    genid: (req) => {
+    genid: () => {
       return genRandomString();
     },
     secret: "xyzsecret",
@@ -56,7 +56,7 @@ app.use(
 app.set("jsonp callback name", "cid");
 
 // Custom headers
-app.use((req, res, next) => {
+app.use((_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   if (process.env.MAX_AGE_GENERAL) {
     res.header("Cache-Control", `max-age=${process.env.MAX_AGE_GENERAL}`);
@@ -67,7 +67,10 @@ app.use((req, res, next) => {
 function corsDelegate(req, res, next) {
   const origin = req.header("Origin");
   if (origin !== undefined) logger.info("Origin:" + origin);
-  if (corsWhitelist.indexOf("*") !== -1 || isOriginAllowed(origin, corsWhitelist)) {
+  if (
+    corsWhitelist.indexOf("*") !== -1 ||
+    isOriginAllowed(origin, corsWhitelist)
+  ) {
     next();
   } else {
     res.status(HttpStatus.FORBIDDEN).json({ message: "Not allowed by CORS" });
@@ -76,10 +79,12 @@ function corsDelegate(req, res, next) {
 
 app.use("/", corsDelegate);
 
-app.use(function onError(error, req, res, next) {
+app.use(function onError(error, _, res, __) {
   logger.error("Unhandled error");
   console.error(error);
-  res.status(500).json({ code: 500, message: error.message, sentryId: res.sentry });
+  res
+    .status(500)
+    .json({ code: 500, message: error.message, sentryId: res.sentry });
 });
 
 export default {
@@ -98,8 +103,7 @@ app._router.stack.forEach((r) => {
 
 if (module["hot"]) {
   module["hot"].dispose(function () {
-    app = null;
     logger.info("Disposed app.ts");
   });
+  logger.info("HMR signal");
 }
-logger.info("HMR signal");
