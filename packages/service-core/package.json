@@ -1,6 +1,6 @@
 {
   "name": "@01/service-core",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "author": "Nidin Vinayakan",
   "license": "MIT",
   "main": "dist/index.js",
@@ -32,5 +32,5 @@
   "devDependencies": {
     "@01/core-utils": "^1.0.2"
   },
-  "gitHead": "4384e5ed2a6ca9dd6926b36311ee34a6b00f778d"
+  "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
 }
