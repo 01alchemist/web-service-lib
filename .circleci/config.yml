@@ -37,7 +37,6 @@ references:
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      npm i lerna@3
       yarn bootstrap
 
   tools_install: &tools_install
