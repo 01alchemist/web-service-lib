@@ -5,11 +5,19 @@
     "packages/*"
   ],
   "scripts": {
+    "#":"########  INSTALL ########",
     "bootstrap": "lerna bootstrap",
+
+    "#":"########  DEVELOPMENT ########",
     "build": "lerna run build --stream",
     "watch": "lerna run watch --stream",
-    "start": "lerna run start --stream",
     "test": "lerna run test --stream",
+    "lint": "lerna run lint --stream",
+    
+    "#":"########  PRODUCTION ########",
+    "start": "lerna run start --stream",
+    
+    "#":"########  DEPLOYMENT ########",
     "publish-report": "./scripts/publish-report",
     "publish": "lerna publish --create-release=github --conventional-commits --yes",
     "npm-publish": "lerna run publish"
