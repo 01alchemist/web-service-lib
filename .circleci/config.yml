@@ -91,14 +91,15 @@ jobs:
           command: yarn test
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
-      - run: 
-          command: ./.tools/cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.json coverage/lcov.info
-      - run: 
-          command: ./.tools/cc-test-reporter upload-coverage -i coverage/codeclimate.json
+      # Codeclimate codecoverage reporting
+      - run:
+          command: yarn publish-report
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
           path: ./reports/junit
+      - store_artifacts:
+          path: ./coverage
           
   build:
     executor: node
@@ -110,7 +111,8 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - dist
+            - ./packages/*/dist
+            - ./services/*/dist
             
   publish_pkg:
     executor: node
