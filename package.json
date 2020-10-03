@@ -20,6 +20,7 @@
     "npm-publish": "lerna run publish"
   },
   "devDependencies": {
+    "@01/launcher": "1.0.14",
     "lerna": "3.21.0",
     "ts-node": "9.0.0",
     "typescript": "4.0.3",
