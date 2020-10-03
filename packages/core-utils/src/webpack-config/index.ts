@@ -65,7 +65,11 @@ export const WebpackNodeConfig = ({
 
   const buildInfo = generateBuildInfo(pkg);
   const { branch, release } = buildInfo;
-  const isDevOrMaster = branch === "develop" || branch === "master";
+  const isSentryEnabled =
+    (branch === "develop" || branch === "master") &&
+    process.env.SENTRY_ORG !== undefined &&
+    process.env.SENTRY_AUTH_TOKEN !== undefined &&
+    process.env.SENTRY_PROJECT !== undefined;
   // const { name, version, main, engines } = pkg;
   // const basePackageValues = {
   //   name,
@@ -107,7 +111,7 @@ export const WebpackNodeConfig = ({
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.NamedModulesPlugin(),
-      isDevOrMaster &&
+      isSentryEnabled &&
         new SentryWebpackPlugin({
           release,
           include: baseDir,
