@@ -17,13 +17,7 @@ const packages = fs
   .readdirSync(path.resolve(__dirname, "../packages"))
   .map((name) => ({ name, path: `packages/${name}` }));
 
-const services = fs
-  .readdirSync(path.resolve(__dirname, "../services"))
-  .map((name) => ({ name, path: `services/${name}` }));
-
-const projects = services
-  .concat(packages)
-  .filter((project) => !project.name.startsWith("."));
+const projects = packages.filter((project) => !project.name.startsWith("."));
 
 async function formatCoverage() {
   const outputs = [];
