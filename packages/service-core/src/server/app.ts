@@ -1,7 +1,7 @@
 import express from "express";
-import * as session from "express-session";
-import * as compression from "compression";
-import * as bodyParser from "body-parser";
+import session from "express-session";
+import compression from "compression";
+import bodyParser from "body-parser";
 import { genRandomString, isOriginAllowed, logVar } from "./utils";
 import { HttpStatus } from "./utils/request";
 import { swagger } from "./components/auto-router";
@@ -13,9 +13,7 @@ const isDev = env("NODE_ENV", "development") === "development";
 const corsWhitelist = envJson("CORS_WHITELIST") ?? ["*"];
 
 // App Version
-declare const VERSION: string;
-logVar("APP_VERSION", VERSION);
-process.env.APP_VERSION = VERSION;
+logVar("APP_VERSION", env("APP_VERSION"));
 
 //Express
 let app = express();

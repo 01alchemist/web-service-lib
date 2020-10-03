@@ -5,7 +5,7 @@
   "author": "Nidin Vinayakan <01@01alchemist.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "type": "module",
+  "type": "commonjs",
   "files": [
     "./dist/index.js"
   ],

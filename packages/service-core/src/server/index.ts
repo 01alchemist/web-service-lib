@@ -29,14 +29,19 @@ let prevServer: Server;
 console.log("Port:" + port);
 
 export class ExpressServer {
+  private promise: Promise<Express>;
   constructor() {
+    this.promise = app.create();
     this.init();
   }
   async init() {
-    const appInstance = await app.create();
+    const appInstance = await this.promise;
     prevAppInstance = appInstance;
     appInstance.set("port", port);
     startServer(appInstance);
+  }
+  ready() {
+    return this.promise;
   }
   get app() {
     return prevAppInstance;
@@ -94,8 +99,6 @@ function startServer(appInstance: Express) {
   manageSockets(prevServer);
   return prevServer;
 }
-
-
 
 // TCP Socket keeper
 let sockets = new Map();

@@ -2,6 +2,7 @@ import * as express from "express";
 import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
 import { AutoRouter, AutoRoute, AutoMethod } from "./auto-router";
 import { envInt } from "@01/env";
+import { inspect } from "util";
 let openApiSchema;
 
 /**
@@ -55,7 +56,7 @@ type SwaggerOptions = {
   app: express.Express;
   basePath?: string;
 };
-async function initialize({ app, basePath = "api" }: SwaggerOptions) {
+async function initialize({ app, basePath = "/api" }: SwaggerOptions) {
   const swaggerVersion = "3";
   const schema = schemaCatelog[swaggerVersion];
   const tags: Set<string> = new Set();
@@ -84,6 +85,7 @@ async function initialize({ app, basePath = "api" }: SwaggerOptions) {
   schema.tags = _tags ? _tags : [];
   openApiSchema = schema;
   const openApiRouter = AutoRouter.getRouter();
+  console.log(inspect(schema, { colors: true, depth: null }));
 
   // Install open api validator middleware
   app.use(
