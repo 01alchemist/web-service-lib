@@ -13,6 +13,11 @@ describe("env test suite", () => {
       delete process.env.STRING_VALUE;
       expect(env("STRING_VALUE", "DEFAULT_VALUE")).toBe("DEFAULT_VALUE");
     });
+
+    it("Should return undefined if there is no default value", () => {
+      delete process.env.STRING_VALUE;
+      expect(env("STRING_VALUE")).toBeUndefined();
+    });
   });
 
   describe("When reading int env variable", () => {
@@ -27,6 +32,11 @@ describe("env test suite", () => {
       delete process.env.INT_VALUE;
       expect(envInt("INT_VALUE", 1)).toBe(1);
     });
+
+    it("Should return undefined if there is no default value", () => {
+      delete process.env.INT_VALUE;
+      expect(envInt("INT_VALUE")).toBeUndefined();
+    });
   });
 
   describe("When reading float env variable", () => {
@@ -40,6 +50,11 @@ describe("env test suite", () => {
     it("Should return default value", () => {
       delete process.env.FLOAT_VALUE;
       expect(envFloat("FLOAT_VALUE", 1.5)).toBe(1.5);
+    });
+
+    it("Should return undefined if there is no default value", () => {
+      delete process.env.FLOAT_VALUE;
+      expect(envFloat("FLOAT_VALUE")).toBeUndefined();
     });
   });
 
@@ -61,6 +76,11 @@ describe("env test suite", () => {
     it("Should return default value", () => {
       delete process.env.BOOLEAN_VALUE;
       expect(envBoolean("BOOLEAN_VALUE", true)).toBe(true);
+    });
+
+    it("Should return undefined if there is no default value", () => {
+      delete process.env.BOOLEAN_VALUE;
+      expect(envBoolean("BOOLEAN_VALUE")).toBeUndefined();
     });
   });
 
@@ -84,7 +104,7 @@ describe("env test suite", () => {
           value: true,
         });
       });
-      it("Should return undefined if no default value", () => {
+      it("Should return undefined if there is no default value", () => {
         delete process.env.JSON_VALUE;
         expect(envJson("JSON_VALUE")).toBeUndefined();
       });
