@@ -1,6 +1,6 @@
 {
   "name": "@01/service-core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": "git@github.com:01alchemist/web-service-lib.git",
   "author": "Nidin Vinayakan <01@01alchemist.com>",
   "license": "MIT",
@@ -35,9 +35,9 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@01/core-utils": "2.0.1",
-    "prettier": "2.1.2",
-    "nodemon": "2.0.4"
+    "@01/core-utils": "^2.0.2",
+    "nodemon": "2.0.4",
+    "prettier": "2.1.2"
   },
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
 }

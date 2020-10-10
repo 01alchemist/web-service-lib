@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.0.1...@01/env@2.0.2) (2020-10-10)
+
+
+### Bug Fixes
+
+* separator const added ([ae49f4b](https://github.com/01alchemist/web-service-lib/commit/ae49f4b3e15d62410626d739b6c162bf1d448fca))
+* **env:** Test coverage increased to 100% ([22b9d2a](https://github.com/01alchemist/web-service-lib/commit/22b9d2a4e4673fd692a6c8a9f511c3ba22387845))
+
+
+
+
+
 ## [2.0.1](https://github.com/01alchemist/env/compare/@01/env@1.0.6...@01/env@2.0.1) (2020-10-02)
 
 **Note:** Version bump only for package @01/env
