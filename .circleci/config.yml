@@ -23,21 +23,20 @@ references:
   restore_yarn_cache: &restore_yarn_cache
     restore_cache: 
       keys:
-        - v1-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
+        - v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
 
   save_yarn_cache: &save_yarn_cache
     save_cache: 
-      key: v1-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
+      key: v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
       paths:
-        - ~/.npmrc
-        - node_modules
+        - ~/.cache/yarn
         - .tools
 
   yarn_install: &yarn_install
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      yarn bootstrap
+      yarn install --frozen-lockfile --ignore-optional
 
   tools_install: &tools_install
     name: Installing tools
@@ -64,21 +63,17 @@ jobs:
           key: v1-repo-{{ .Branch }}-{{ .Revision }}
           paths:
             - .
-            
-  install_pkg:
+  
+  lint_test_build:
     executor: node
     steps:
+      # Install dependencies
       - *restore_repo
       - *restore_yarn_cache
       - run: *yarn_install
       - run: *tools_install
       - *save_yarn_cache
-  
-  lint_test_build:
-    executor: node
-    steps:
-      - *restore_repo
-      - *restore_yarn_cache
+      # Lint, Test & Build
       - run:
           command: yarn lint
       - run:
@@ -100,17 +95,14 @@ jobs:
           root: *workspace_root
           paths:
             - ./packages/*/dist
-            - ./services/*/dist
             
   publish_pkg:
     executor: node
     steps:
       - *restore_repo
-      - *restore_yarn_cache
       - *attach_workspace
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: yarn run publish --access public
-      
       
 workflows:
   version: 2
@@ -118,20 +110,9 @@ workflows:
   default:
     jobs:
       - checkout_code
-      - install_pkg:
-          requires:
+      - lint_test_build:
+         requires:
           - checkout_code
-      - lint:
-          requires:
-            - install_pkg
-      - unit_test:
-          requires:
-            - install_pkg
-      - build:
-          requires:
-            - install_pkg
-            - unit_test
-            - lint
       - publish_pkg:
           requires:
-            - build
+            - lint_test_build
