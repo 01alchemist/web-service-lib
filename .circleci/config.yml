@@ -23,11 +23,11 @@ references:
   restore_yarn_cache: &restore_yarn_cache
     restore_cache: 
       keys:
-        - v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
+        - v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
 
   save_yarn_cache: &save_yarn_cache
     save_cache: 
-      key: v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
+      key: v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
       paths:
         - ~/.cache/yarn
         - node_modules
@@ -42,9 +42,9 @@ references:
   tools_install: &tools_install
     name: Installing tools
     command: |
-      mkdir -p .tools/
-      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./.tools/cc-test-reporter
-      chmod +x ./.tools/cc-test-reporter
+      sudo mkdir -p .tools/
+      sudo curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./.tools/cc-test-reporter
+      sudo chmod +x ./.tools/cc-test-reporter
 
 executors:
   node:
