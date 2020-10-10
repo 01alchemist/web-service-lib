@@ -103,8 +103,10 @@ jobs:
     executor: node
     steps:
       - checkout
+      - *restore_yarn_cache
       - *attach_workspace
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: yarn global add lerna
       - run: yarn run publish
       
 workflows:
