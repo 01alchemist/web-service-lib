@@ -42,9 +42,9 @@ references:
   tools_install: &tools_install
     name: Installing tools
     command: |
-      sudo mkdir -p .tools/
-      sudo curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./.tools/cc-test-reporter
-      sudo chmod +x ./.tools/cc-test-reporter
+      mkdir -p .tools/
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./.tools/cc-test-reporter
+      chmod +x ./.tools/cc-test-reporter
 
 executors:
   node:
