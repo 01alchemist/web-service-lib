@@ -19,8 +19,7 @@
     "start": "lerna run start --stream",
     "########  DEPLOYMENT ########": "#",
     "publish-report": "./scripts/publish-report",
-    "publish": "lerna publish --create-release=github --conventional-commits --yes",
-    "npm-publish": "lerna run publish"
+    "publish": "lerna publish --create-release=github --conventional-commits --yes"
   },
   "devDependencies": {
     "@01/launcher": "1.0.14",

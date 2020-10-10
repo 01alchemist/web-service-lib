@@ -20,7 +20,6 @@
     "precommit": "lint-staged",
     "test": "NODE_ENV=test jest --ci --config=./jest.json --coverage --reporters=default --reporters=jest-junit",
     "tdd": "NODE_ENV=test jest --config=./jest.json --coverage --watch",
-    "publish": "npm publish --access public",
     "link": "yarn link",
     "unlink": "yarn unlink",
     "clean": "rm -rf node_modules"
