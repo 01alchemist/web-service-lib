@@ -102,7 +102,7 @@ jobs:
       - *restore_repo
       - *attach_workspace
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: yarn run publish --access public
+      - run: yarn run publish
       
 workflows:
   version: 2
