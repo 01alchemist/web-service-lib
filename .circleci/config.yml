@@ -112,9 +112,7 @@ workflows:
   default:
     jobs:
       - checkout_code
-      - lint_test_build:
-         requires:
-          - checkout_code
+      - lint_test_build
       - publish_pkg:
           requires:
             - lint_test_build
