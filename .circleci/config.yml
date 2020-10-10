@@ -57,7 +57,7 @@ executors:
 
 jobs:
 
-  lint_test_build:
+  lint_test_build_publish:
     executor: node
     steps:
       # Install dependencies
@@ -89,17 +89,8 @@ jobs:
           root: *workspace_root
           paths:
             - ./packages/*/dist
-            
-  publish_pkg:
-    executor: node
-    steps:
-      - checkout
-      - *restore_yarn_cache
-      - *attach_workspace
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: git config --global user.email "01@01alchemist.com"
       - run: git config --global user.name "Nidin Vinayakan"
-      - run: yarn global add lerna
       - run: yarn run publish
       
 workflows:
@@ -107,7 +98,4 @@ workflows:
 
   default:
     jobs:
-      - lint_test_build
-      - publish_pkg:
-          requires:
-            - lint_test_build
+      - lint_test_build_publish
