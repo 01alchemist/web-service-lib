@@ -37,6 +37,7 @@ references:
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      yarn add --global lerna
       yarn install --frozen-lockfile --ignore-optional
 
   tools_install: &tools_install
