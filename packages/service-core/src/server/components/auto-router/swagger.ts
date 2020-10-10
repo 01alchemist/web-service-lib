@@ -1,6 +1,6 @@
 import * as express from "express";
 import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
-import { AutoRouter, AutoRoute, AutoMethod } from "./auto-router";
+import { AutoRouter, AutoRoute, AutoMethod, SEPARATOR } from "./auto-router";
 import { envInt } from "@01/env";
 import { inspect } from "util";
 let openApiSchema;
@@ -65,7 +65,8 @@ async function initialize({ app, basePath = "/api" }: SwaggerOptions) {
   let routeCount = 0;
   routes.forEach((route, key) => {
     if (route.tags) route.tags.forEach((tag) => tags.add(tag));
-    const fragments = key.split(":");
+    console.log("key --> ", key);
+    const fragments = key.split(SEPARATOR);
     const operationId = `Operation_${++routeCount}`;
     const path = fragments[1];
     const absolutePath = `${basePath}${path}`;

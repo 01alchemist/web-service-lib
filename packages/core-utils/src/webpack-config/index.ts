@@ -126,22 +126,22 @@ export const WebpackNodeConfig = ({
       rules: [
         {
           test: /\.node$/,
-          loader: require.resolve("node-loader"),
+          loader: "node-loader",
         },
         {
           test: /\.tsx?$/,
-          loader: require.resolve("ts-loader"),
+          loader: "ts-loader",
           exclude: /(node_modules|.yarn)/,
         },
         {
           test: /\.pnp.js?$/,
-          loader: require.resolve("shebang-loader"),
+          loader: "shebang-loader",
           exclude: /(node_modules|.yarn)/,
         },
         {
           enforce: "pre",
           test: /\.(ts)$/,
-          loader: require.resolve("eslint-loader"),
+          loader: "eslint-loader",
           exclude: /(node_modules|.yarn)/,
           options: {
             emitErrors: true,
@@ -150,7 +150,7 @@ export const WebpackNodeConfig = ({
         {
           test: /\.(graphql|gql)$/,
           exclude: /(node_modules|.yarn)/,
-          loader: require.resolve("graphql-tag/loader"),
+          loader: "graphql-tag/loader",
         },
       ],
     },

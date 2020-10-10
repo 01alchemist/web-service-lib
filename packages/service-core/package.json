@@ -12,7 +12,8 @@
   "scripts": {
     "watch": "nodemon --watch webpack.config.ts ../../scripts/webpack.js -- --config=webpack.config.ts --watch",
     "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "link": "yarn link"
   },
   "dependencies": {
     "@01/env": "^1.0.6",

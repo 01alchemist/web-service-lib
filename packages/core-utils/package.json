@@ -14,7 +14,8 @@
     "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
     "precommit": "lint-staged",
     "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "link": "yarn link"
   },
   "lint-staged": {
     "*.js": [
