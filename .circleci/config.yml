@@ -55,21 +55,22 @@ executors:
       TZ: "/usr/share/zoneinfo/Europe/Berlin"
 
 jobs:
-  checkout_code:
-    executor: node
-    steps:
-      - *restore_repo
-      - checkout
-      - save_cache:
-          key: v1-repo-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - .
+#   checkout_code:
+#     executor: node
+#     steps:
+#       - *restore_repo
+#       - checkout
+#       - save_cache:
+#           key: v1-repo-{{ .Branch }}-{{ .Revision }}
+#           paths:
+#             - .
   
   lint_test_build:
     executor: node
     steps:
       # Install dependencies
-      - *restore_repo
+#       - *restore_repo
+      - checkout
       - *restore_yarn_cache
       - run: *yarn_install
       - run: *tools_install
@@ -100,7 +101,6 @@ jobs:
   publish_pkg:
     executor: node
     steps:
-      - *restore_repo
       - checkout
       - *attach_workspace
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
