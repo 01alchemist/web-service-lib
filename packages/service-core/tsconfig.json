@@ -2,9 +2,9 @@
   "include": ["src"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
   "compilerOptions": {
-    "target": "es2019",
-    "module": "commonjs",
-    "lib": ["es2019"],
+    "module": "CommonJS",
+    "target": "es2015",
+    "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "declarationMap": true,
@@ -27,7 +27,7 @@
     "baseUrl": "./src",
     "outDir": "./dist",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./src/*"]
     },
     "esModuleInterop": true
   }

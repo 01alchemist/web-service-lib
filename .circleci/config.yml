@@ -74,19 +74,13 @@ jobs:
       - run: *tools_install
       - *save_yarn_cache
   
-  lint:
+  lint_test_build:
     executor: node
     steps:
       - *restore_repo
       - *restore_yarn_cache
       - run:
           command: yarn lint
-  
-  unit_test:
-    executor: node
-    steps:
-      - *restore_repo
-      - *restore_yarn_cache
       - run:
           command: yarn test
           environment:
@@ -100,12 +94,6 @@ jobs:
           path: ./reports/junit
       - store_artifacts:
           path: ./coverage
-          
-  build:
-    executor: node
-    steps:
-      - *restore_repo
-      - *restore_yarn_cache
       - run: 
           command: yarn build
       - persist_to_workspace:
