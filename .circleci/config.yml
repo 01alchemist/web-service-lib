@@ -100,6 +100,7 @@ jobs:
     executor: node
     steps:
       - *restore_repo
+      - checkout
       - *attach_workspace
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: yarn run publish
