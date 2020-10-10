@@ -30,6 +30,7 @@ references:
       key: v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ .Environment.CACHE_VERSION }}
       paths:
         - ~/.cache/yarn
+        - node_modules
         - .tools
 
   yarn_install: &yarn_install
@@ -48,7 +49,7 @@ references:
 executors:
   node:
     docker:
-      - image: 01alchemist/node:14
+      - image: circleci/node:14
     working_directory: *workspace_root
     environment:
       TZ: "/usr/share/zoneinfo/Europe/Berlin"
