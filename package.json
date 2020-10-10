@@ -13,6 +13,8 @@
     "test": "lerna run test --stream",
     "lint": "lerna run lint --stream",
     "link": "lerna run link --stream",
+    "unlink": "lerna run unlink --stream",
+    "clean": "rm -rf node_modules && lerna run clean --stream",
     "########  PRODUCTION ########": "#",
     "start": "lerna run start --stream",
     "########  DEPLOYMENT ########": "#",

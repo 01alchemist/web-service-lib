@@ -15,7 +15,9 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'",
     "publish": "npm publish --access public",
-    "link": "yarn link"
+    "link": "yarn link",
+    "unlink": "yarn unlink",
+    "clean": "rm -rf node_modules"
   },
   "lint-staged": {
     "*.js": [
