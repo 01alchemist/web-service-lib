@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/01alchemist/web-service-lib/compare/@01/service-core@2.1.0...@01/service-core@2.1.1) (2020-10-11)
+
+
+### Bug Fixes
+
+* ExpressServer default options added ([b22fe3b](https://github.com/01alchemist/web-service-lib/commit/b22fe3b88c5c9835a1a110f83af44abf74aa8400))
+
+
+
+
+
 # [2.1.0](https://github.com/01alchemist/web-service-lib/compare/@01/service-core@2.0.3...@01/service-core@2.1.0) (2020-10-11)
 
 
