@@ -11,34 +11,39 @@ import app from "./app";
 import { Server } from "http";
 import { AddressInfo } from "net";
 
-const nodeEnv = env("NODE_ENV", "development");
-process.env.NODE_ENV = nodeEnv;
-
-const isDev = env("NODE_ENV", "development") === "development";
-logVar("NODE_ENV:", nodeEnv);
-const port =
-  envInt("npm_package_config_api_port") ||
-  envInt("NODE_PORT") ||
-  envInt("PORT") ||
-  3000;
-const host = "0.0.0.0";
-process.env.NODE_RUNTIME_PORT = port.toString();
 let prevAppInstance: Express;
 let prevServer: Server;
-
-console.log("Port:" + port);
+let isDev = false;
+type ServerOptions = { NODE_ENV: string; PORT: number };
 
 export class ExpressServer {
   private promise: Promise<Express>;
-  constructor() {
+
+  port: number;
+  host: string;
+
+  constructor({ NODE_ENV = "development", PORT = 3000 }: ServerOptions) {
+    const nodeEnv = env("NODE_ENV", NODE_ENV);
+    process.env.NODE_ENV = nodeEnv;
+    isDev = nodeEnv === "development";
+    logVar("NODE_ENV:", nodeEnv);
+    this.port =
+      envInt("npm_package_config_api_port") ||
+      envInt("NODE_PORT") ||
+      envInt("PORT") ||
+      PORT;
+    this.host = "0.0.0.0";
+    process.env.NODE_RUNTIME_PORT = this.port.toString();
+    logVar("NODE_PORT:", this.port);
+
     this.promise = app.create();
     this.init();
   }
   async init() {
     const appInstance = await this.promise;
     prevAppInstance = appInstance;
-    appInstance.set("port", port);
-    startServer(appInstance);
+    appInstance.set("port", this.port);
+    this.startServer(appInstance);
   }
   ready() {
     return this.promise;
@@ -49,55 +54,55 @@ export class ExpressServer {
   get server() {
     return prevServer;
   }
-}
 
-function startServer(appInstance: Express) {
-  console.log("Starting http(s) server...");
-  // Listen the server
-  prevServer = appInstance.listen(port, host, async () => {
-    const addressInfo: AddressInfo = prevServer.address() as AddressInfo;
-    const host = addressInfo.address;
-    if (process.env.DYNO) {
-      console.log("This is on Heroku..!!");
-      fs.openSync("/tmp/app-initialized", "w");
-    }
-    console.log("\n ✈️ Express server listening at %s:%s", host, port);
-    const ngrokAuthToken = env("NGROK_TOKEN");
-    if (isDev && ngrokAuthToken) {
-      try {
-        await ngrok.authtoken(ngrokAuthToken);
-        const url = await ngrok.connect(port);
-        console.log("|###################################################|");
-        console.log("|                                                   |");
-        console.log("|        COPY & PASTE NGROK URL BELOW:              |");
-        console.log("|                                                   |");
-        console.log("|          " + url + "                |");
-        console.log("|                                                   |");
-        console.log("|###################################################|");
-
-        console.log("=====");
-        console.log(
-          "Visit the Actions on Google console at http://console.actions.google.com"
-        );
-        console.log("Replace the webhook URL in the Actions section with:");
-        console.log("    " + url + "/smarthome");
-
-        console.log("In the console, set the Authorization URL to:");
-        console.log("    " + url + "/oauth");
-
-        console.log("");
-        console.log("Then set the Token URL to:");
-        console.log("    " + url + "/token");
-        console.log("");
-
-        console.log("Finally press the 'TEST DRAFT' button");
-      } catch (e) {
-        console.log("ngrok error", e);
+  startServer(appInstance: Express) {
+    console.log("Starting http(s) server...");
+    // Listen the server
+    prevServer = appInstance.listen(this.port, this.host, async () => {
+      const addressInfo: AddressInfo = prevServer.address() as AddressInfo;
+      const host = addressInfo.address;
+      if (process.env.DYNO) {
+        console.log("This is on Heroku..!!");
+        fs.openSync("/tmp/app-initialized", "w");
       }
-    }
-  });
-  manageSockets(prevServer);
-  return prevServer;
+      console.log("\n ✈️ Express server listening at %s:%s", host, this.port);
+      const ngrokAuthToken = env("NGROK_TOKEN");
+      if (isDev && ngrokAuthToken) {
+        try {
+          await ngrok.authtoken(ngrokAuthToken);
+          const url = await ngrok.connect(this.port);
+          console.log("|###################################################|");
+          console.log("|                                                   |");
+          console.log("|        COPY & PASTE NGROK URL BELOW:              |");
+          console.log("|                                                   |");
+          console.log("|          " + url + "                |");
+          console.log("|                                                   |");
+          console.log("|###################################################|");
+
+          console.log("=====");
+          console.log(
+            "Visit the Actions on Google console at http://console.actions.google.com"
+          );
+          console.log("Replace the webhook URL in the Actions section with:");
+          console.log("    " + url + "/smarthome");
+
+          console.log("In the console, set the Authorization URL to:");
+          console.log("    " + url + "/oauth");
+
+          console.log("");
+          console.log("Then set the Token URL to:");
+          console.log("    " + url + "/token");
+          console.log("");
+
+          console.log("Finally press the 'TEST DRAFT' button");
+        } catch (e) {
+          console.log("ngrok error", e);
+        }
+      }
+    });
+    manageSockets(prevServer);
+    return prevServer;
+  }
 }
 
 // TCP Socket keeper
@@ -129,18 +134,24 @@ if (isDev) {
     module["hot"].accept("./app", function () {
       console.log("app.ts updated");
       console.log("Closing old http sever...");
-
+      const addressInfo: AddressInfo = prevServer.address() as AddressInfo;
       prevServer.close(() => {
         console.log("Old http sever closed");
         let app = require("./app").default;
         app.create().then((appInstance) => {
           prevAppInstance = appInstance;
-          appInstance.set("port", port);
+          appInstance.set("port", addressInfo.port);
 
           // Listen the server
-          prevServer = appInstance.listen(port, host, function () {
-            console.log(`\n ✈️  Express server reloaded on port ${port}\n`);
-          });
+          prevServer = appInstance.listen(
+            addressInfo.port,
+            addressInfo.address,
+            function () {
+              console.log(
+                `\n ✈️  Express server reloaded on port ${addressInfo.port}\n`
+              );
+            }
+          );
           manageSockets(prevServer);
         });
       });
