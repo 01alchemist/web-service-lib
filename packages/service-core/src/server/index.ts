@@ -14,7 +14,7 @@ import { AddressInfo } from "net";
 let prevAppInstance: Express;
 let prevServer: Server;
 let isDev = false;
-type ServerOptions = { NODE_ENV: string; PORT: number };
+type ServerOptions = { NODE_ENV?: string; PORT?: number };
 
 export class ExpressServer {
   private promise: Promise<Express>;
@@ -22,7 +22,7 @@ export class ExpressServer {
   port: number;
   host: string;
 
-  constructor({ NODE_ENV = "development", PORT = 3000 }: ServerOptions) {
+  constructor({ NODE_ENV = "development", PORT = 3000 }: ServerOptions = {}) {
     const nodeEnv = env("NODE_ENV", NODE_ENV);
     process.env.NODE_ENV = nodeEnv;
     isDev = nodeEnv === "development";
