@@ -1,11 +1,11 @@
 {
   "name": "@01/service-core",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "repository": "git@github.com:01alchemist/web-service-lib.git",
   "author": "Nidin Vinayakan <01@01alchemist.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "type": "commonjs",
+  "typings": "dist/index.d.ts",
   "files": [
     "./dist/index.js"
   ],
