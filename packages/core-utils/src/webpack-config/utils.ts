@@ -1,9 +1,9 @@
 import path from "path";
 
 export function resolveTsPaths(tsConfig: any, baseDir: string) {
-  const { baseUrl, paths: tsPaths } = tsConfig.compilerOptions;
+  const { baseUrl = ".", paths: tsPaths = {} } = tsConfig.compilerOptions;
   const resolvedTsPaths: { [key: string]: string } = {};
-  Object.keys(tsPaths).forEach(pathName => {
+  Object.keys(tsPaths).forEach((pathName) => {
     const [tsPath] = tsPaths[pathName];
     let cleanPathName = pathName.replace(/\*/gi, "");
     cleanPathName =
@@ -27,7 +27,7 @@ export function generateBuildInfo(pkg: any): BuildInfo {
     CIRCLE_BUILD_NUM = "[Not available]",
     CIRCLE_BRANCH = "[Not available]",
     CIRCLE_PR_NUMBER = "[Not available]",
-    CIRCLE_WORKFLOW_ID = "[Not available]"
+    CIRCLE_WORKFLOW_ID = "[Not available]",
   } = process.env;
   const build = CIRCLE_BUILD_NUM;
   const branch = CIRCLE_BRANCH;
