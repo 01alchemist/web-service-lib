@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/01alchemist/web-service-lib/compare/@01/core-utils@2.0.3...@01/core-utils@2.0.4) (2022-04-12)
+
+
+### Bug Fixes
+
+* resolveTsPaths fixed ([8072429](https://github.com/01alchemist/web-service-lib/commit/807242906ef479111d3a18e2253ab2579340e25c))
+
+
+
+
+
 ## [2.0.3](https://github.com/01alchemist/web-service-lib/compare/@01/core-utils@2.0.2...@01/core-utils@2.0.3) (2020-10-10)
 
 

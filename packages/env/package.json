@@ -1,6 +1,6 @@
 {
   "name": "@01/env",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Nodejs env utils",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -35,7 +35,7 @@
     "tslib": "2.0.1"
   },
   "devDependencies": {
-    "@01/core-utils": "^2.0.3",
+    "@01/core-utils": "^2.0.4",
     "@types/node": "14.11.2",
     "jest-junit": "11.1.0",
     "nodemon": "2.0.4",
