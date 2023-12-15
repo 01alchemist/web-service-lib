@@ -4,15 +4,20 @@
 #
 version: 2.1
 
-references:
+workflows:
+  version: 2
+  default:
+    jobs:
+      - lint_test_build_publish:
+          context: GITHUB
 
-  workspace_root: &workspace_root
-    ~/repo
+references:
+  workspace_root: &workspace_root ~/repo
 
   attach_workspace: &attach_workspace
     attach_workspace:
       at: *workspace_root
-      
+
   restore_repo: &restore_repo
     restore_cache:
       keys:
@@ -21,13 +26,16 @@ references:
         - v1-repo
 
   restore_npm_cache: &restore_npm_cache
-    restore_cache: 
+    restore_cache:
       keys:
-        - v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+        - v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{
+          .Environment.CACHE_VERSION }}
 
   save_npm_cache: &save_npm_cache
-    save_cache: 
-      key: v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+    save_cache:
+      key:
+        v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{
+        .Environment.CACHE_VERSION }}
       paths:
         - ~/.npm
         - node_modules
@@ -52,15 +60,14 @@ executors:
       - image: cimg/node:18.19.0
     working_directory: *workspace_root
     environment:
-      TZ: "/usr/share/zoneinfo/Europe/Berlin"
+      TZ: '/usr/share/zoneinfo/Europe/Berlin'
 
 jobs:
-
   lint_test_build_publish:
     executor: node
     steps:
       # Install dependencies
-#       - *restore_repo
+      #       - *restore_repo
       - checkout
       - *restore_npm_cache
       - run: *npm_install
@@ -72,7 +79,7 @@ jobs:
       - run:
           command: npm run test
           environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       # Codeclimate codecoverage reporting
       - run:
           command: npm run publish-report
@@ -82,7 +89,7 @@ jobs:
           path: ./reports/junit
       - store_artifacts:
           path: ./coverage
-      - run: 
+      - run:
           command: npm run build
       - persist_to_workspace:
           root: *workspace_root
@@ -90,11 +97,7 @@ jobs:
             - ./packages/*/dist
       - run: git config --global user.email "01@01alchemist.com"
       - run: git config --global user.name "Nidin Vinayakan"
-      - run: npm run publish
-      
-workflows:
-  version: 2
-
-  default:
-    jobs:
-      - lint_test_build_publish
+      - run:
+          lerna publish --force-git-tag --create-release=github
+          --conventional-commits --conventional-graduate --yes
+          --github-token=$GITHUB_TOKEN
