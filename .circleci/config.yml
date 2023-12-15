@@ -37,7 +37,6 @@ references:
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      npm i -g lerna nx
       npm install
 
   tools_install: &tools_install
