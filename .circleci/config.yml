@@ -20,25 +20,25 @@ references:
         - v1-repo-{{ .Branch }}
         - v1-repo
 
-  restore_yarn_cache: &restore_yarn_cache
+  restore_npm_cache: &restore_npm_cache
     restore_cache: 
       keys:
-        - v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+        - v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
 
-  save_yarn_cache: &save_yarn_cache
+  save_npm_cache: &save_npm_cache
     save_cache: 
-      key: v2-yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
+      key: v1-npm-cache-{{ checksum "package-lock.json" }}-{{ arch }}-{{ .Environment.CACHE_VERSION }}
       paths:
-        - ~/.cache/yarn
+        - ~/.npm
         - node_modules
         - .tools
 
-  yarn_install: &yarn_install
+  npm_install: &npm_install
     name: Installing
     command: |
       echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      yarn global add lerna
-      yarn install --frozen-lockfile --ignore-optional
+      npm i -g lerna nx
+      npm install
 
   tools_install: &tools_install
     name: Installing tools
@@ -50,7 +50,7 @@ references:
 executors:
   node:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:18
     working_directory: *workspace_root
     environment:
       TZ: "/usr/share/zoneinfo/Europe/Berlin"
@@ -63,20 +63,20 @@ jobs:
       # Install dependencies
 #       - *restore_repo
       - checkout
-      - *restore_yarn_cache
-      - run: *yarn_install
+      - *restore_npm_cache
+      - run: *npm_install
       - run: *tools_install
-      - *save_yarn_cache
+      - *save_npm_cache
       # Lint, Test & Build
       - run:
-          command: yarn lint
+          command: npm run lint
       - run:
-          command: yarn test
+          command: npm run test
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
       # Codeclimate codecoverage reporting
       - run:
-          command: yarn publish-report
+          command: npm run publish-report
       - store_test_results:
           path: ./reports/junit
       - store_artifacts:
@@ -84,14 +84,14 @@ jobs:
       - store_artifacts:
           path: ./coverage
       - run: 
-          command: yarn build
+          command: npm run build
       - persist_to_workspace:
           root: *workspace_root
           paths:
             - ./packages/*/dist
       - run: git config --global user.email "01@01alchemist.com"
       - run: git config --global user.name "Nidin Vinayakan"
-      - run: yarn run publish
+      - run: npm run publish
       
 workflows:
   version: 2
