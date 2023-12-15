@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.1.0...@01/env@2.1.1) (2023-12-15)
+
+**Note:** Version bump only for package @01/env
+
+
+
+
+
 # [2.1.0](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.0.4...@01/env@2.1.0) (2023-12-15)
 
 
