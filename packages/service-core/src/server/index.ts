@@ -4,7 +4,7 @@ import { env, envInt } from "@01/env";
 process.env.APP_TRACE_NAME = env("APP_NAME", "") + "-web";
 
 import * as fs from "fs";
-import * as ngrok from "ngrok";
+import * as ngrok from "@ngrok/ngrok";
 import { logVar } from "./utils";
 import { Express } from "express";
 import app from "./app";

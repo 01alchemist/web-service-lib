@@ -11,31 +11,32 @@
   ],
   "scripts": {
     "watch": "nodemon --watch webpack.config.ts ../../scripts/webpack.js -- --config=webpack.config.ts --watch",
-    "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
+    "build": "NODE_ENV=production && tsc -p tsconfig.json && copyfiles package.json ./dist",
     "link": "yarn link",
     "unlink": "yarn unlink",
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
     "@01/env": "^1.0.6",
+    "@01/launcher": "1.0.15",
+    "@ngrok/ngrok": "^0.9.1",
     "@sentry/node": "^5.24.2",
     "@types/express": "^4.17.8",
     "@types/node": "^14.11.2",
-    "body-parser": "1.19.0",
+    "body-parser": "^1.20.2",
     "chalk": "^4.1.0",
     "compression": "1.7.4",
-    "express": "4.17.1",
+    "express": "^4.18.2",
     "express-openapi-validator": "^4.0.2",
     "express-session": "1.17.1",
     "hot-shots": "^8.1.0",
-    "ngrok": "3.3.0",
     "source-map-support": "^0.5.19",
     "tslib": "2.0.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@01/core-utils": "^2.0.4",
-    "nodemon": "2.0.4",
+    "nodemon": "^3.0.2",
     "prettier": "2.1.2"
   },
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"

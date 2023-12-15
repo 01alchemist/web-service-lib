@@ -1,6 +1,6 @@
 import * as express from "express";
 import { doSecurityCheck } from "../security";
-import { reportError, Sentry } from "../error-reporters";
+import { BaseError, reportError, Sentry } from "../error-reporters";
 import { RequestStatus, RequestReceipt } from "../lambda";
 import { performance } from "perf_hooks";
 import { env } from "@01/env";
@@ -128,9 +128,9 @@ export const AutoRoute = (params: AutoRouteParameters): any => {
                 } catch (e) {
                   // We don't want to cache errors
                   res.header("Cache-Control", `max-age=0`);
-                  const error = await e;
+                  const error = (await e) as BaseError;
                   reportError(error);
-                  res.status(error.code || 500).json({
+                  res.status(error.code ? parseInt(error.code as string) : 500).json({
                     status: false,
                     error:
                       (error.response && error.response.error) ||

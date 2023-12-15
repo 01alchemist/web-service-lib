@@ -41,7 +41,7 @@ export function profile<T extends Function>(handler: T) {
               // If handler name is anonymous, generate location of the handler.
               try {
                 throw new Error("InternalError");
-              } catch (e) {
+              } catch (e: any) {
                 location = e.stack.split("\n")[2];
               }
             }
