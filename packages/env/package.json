@@ -1,6 +1,6 @@
 {
   "name": "@01/env",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "description": "Tiny env parser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -28,6 +28,5 @@
       "git add"
     ]
   },
-  "dependencies": {},
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
 }

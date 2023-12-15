@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/01alchemist/web-service-lib/compare/@01/core-utils@2.0.4...@01/core-utils@2.1.0) (2023-12-15)
+
+
+### Features
+
+* core-utils updated ([ef8c6e1](https://github.com/01alchemist/web-service-lib/commit/ef8c6e1d49b35f4540edaec2f00b34dfdfd7af3f))
+
+
+
+
+
 ## [2.0.4](https://github.com/01alchemist/web-service-lib/compare/@01/core-utils@2.0.3...@01/core-utils@2.0.4) (2022-04-12)
 
 

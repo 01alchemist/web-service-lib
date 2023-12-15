@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.0.4...@01/env@2.1.0) (2023-12-15)
+
+
+### Features
+
+* **env:** tiny env parser added ([1500930](https://github.com/01alchemist/web-service-lib/commit/150093084a8abffa5bb3b948473535d8964b75fd))
+
+
+
+
+
 ## [2.0.4](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.0.3...@01/env@2.0.4) (2022-04-12)
 
 **Note:** Version bump only for package @01/env
