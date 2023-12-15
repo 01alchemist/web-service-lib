@@ -23,7 +23,7 @@
     "release": "npx lerna version --yes --conventional-commits --conventional-graduate --force-git-tag",
     "alpha-release": "npx lerna version --yes --conventional-commits --conventional-prerelease --preid $(git rev-parse --short HEAD)",
     "publish-changed": "nx affected -t publish --base=$(node -e \"console.log(process.env.NX_GIT_BASE || 'origin/main')\")",
-    "publish": "lerna publish --force-git-tag --create-release=github --conventional-commits --conventional-graduate --yes --github-token=$GITHUB_TOKEN"
+    "publish": "lerna publish --force-git-tag --create-release=github --conventional-commits --conventional-graduate --yes"
   },
   "devDependencies": {
     "@01/launcher": "^1.0.15",
