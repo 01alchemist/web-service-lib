@@ -4,6 +4,10 @@
   "description": "Tiny env parser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "package.json",
+    "dist"
+  ],
   "repository": "git@github.com:01alchemist/web-service-lib.git",
   "author": "Nidin Vinayakan <01@01alchemist.com>",
   "keywords": [
