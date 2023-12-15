@@ -80,6 +80,7 @@ jobs:
           command: npm run test
           environment:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+            GH_TOKEN: $GITHUB_TOKEN
       # Codeclimate codecoverage reporting
       - run:
           command: npm run publish-report
