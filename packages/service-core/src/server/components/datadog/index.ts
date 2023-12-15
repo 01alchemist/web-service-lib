@@ -1,22 +1,22 @@
-import StatsD from "hot-shots";
-import os from "os";
+import StatsD from 'hot-shots'
+import os from 'os'
 const datadog = new StatsD({
   cacheDns: true,
-  maxBufferSize: 1500,
-});
+  maxBufferSize: 1500
+})
 
 function appendHostName(tags) {
-  const hostname = os.hostname();
-  if (Array.isArray(tags) && tags.find((tag) => tag.indexOf("host:") === -1)) {
-    tags.push(`host:${hostname}`);
+  const hostname = os.hostname()
+  if (Array.isArray(tags) && tags.find(tag => tag.indexOf('host:') === -1)) {
+    tags.push(`host:${hostname}`)
   } else if (tags && !tags.host) {
-    tags.host = hostname;
+    tags.host = hostname
   }
-  return tags;
+  return tags
 }
 
 const createStats = (config: any = {}) => {
-  const prefix = config.prefix || "";
+  const prefix = config.prefix || ''
   return {
     gauge(metric, value, tags: string[] = [], callback?) {
       return datadog.gauge(
@@ -24,7 +24,7 @@ const createStats = (config: any = {}) => {
         value,
         appendHostName(tags),
         callback
-      );
+      )
     },
     increment(metric, value, tags: string[] = [], callback?) {
       return datadog.increment(
@@ -32,15 +32,15 @@ const createStats = (config: any = {}) => {
         value,
         appendHostName(tags),
         callback
-      );
+      )
     },
     event(title, text, properties: any = {}, callback?) {
       properties.hostname =
-        properties.host || properties.hostname || os.hostname();
-      return datadog.event(title, text, properties, callback);
+        properties.host || properties.hostname || os.hostname()
+      return datadog.event(title, text, properties, callback)
     },
     histogram(stat, value, tags, callback?) {
-      return datadog.histogram(stat, value, appendHostName(tags), callback);
+      return datadog.histogram(stat, value, appendHostName(tags), callback)
     },
     /**
      * Starts a timer for the given timerId and returns a function to stop that
@@ -55,13 +55,13 @@ const createStats = (config: any = {}) => {
      * stopMyTimer();
      */
     startTimer(timerId, tags) {
-      const startTime = Date.now();
+      const startTime = Date.now()
       return () => {
-        const duration = Date.now() - startTime;
-        datadog.histogram(timerId, duration, appendHostName(tags));
-      };
-    },
-  };
-};
-export const datadogStats = createStats();
-export default createStats;
+        const duration = Date.now() - startTime
+        datadog.histogram(timerId, duration, appendHostName(tags))
+      }
+    }
+  }
+}
+export const datadogStats = createStats()
+export default createStats

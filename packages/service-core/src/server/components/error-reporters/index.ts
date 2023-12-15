@@ -1,2 +1,2 @@
-export * from "./error-handler";
-export * from "./sentry";
+export * from './error-handler'
+export * from './sentry'

@@ -1,2 +1,2 @@
-export * from "./swagger";
-export * from "./auto-router";
+export * from './swagger'
+export * from './auto-router'

@@ -1,72 +1,72 @@
 #!/usr/bin/env node
 /* eslint-disable no-console,import/no-extraneous-dependencies */
-const path = require("path");
-const fs = require("fs-extra");
-const { launch } = require("@01/launcher");
+const path = require('path')
+const fs = require('fs-extra')
+const { launch } = require('@01/launcher')
 
-const cc = path.resolve(__dirname, "../.tools/cc-test-reporter");
+const cc = path.resolve(__dirname, '../.tools/cc-test-reporter')
 
 /**
  * This script will combine all test coverages and report to codeclimate
  * Also move junit reports to top level directory
  */
 
-fs.mkdirpSync(path.resolve(__dirname, "../reports/junit"));
+fs.mkdirpSync(path.resolve(__dirname, '../reports/junit'))
 
 const packages = fs
-  .readdirSync(path.resolve(__dirname, "../packages"))
-  .map((name) => ({ name, path: `packages/${name}` }));
+  .readdirSync(path.resolve(__dirname, '../packages'))
+  .map(name => ({ name, path: `packages/${name}` }))
 
-const projects = packages.filter((project) => !project.name.startsWith("."));
+const projects = packages.filter(project => !project.name.startsWith('.'))
 
 async function formatCoverage() {
-  const outputs = [];
+  const outputs = []
   const promises = projects.map(async ({ name, path: projectPath }) => {
     const lcovInfo = path.resolve(
       __dirname,
-      "../",
+      '../',
       projectPath,
-      "coverage/lcov.info"
-    );
+      'coverage/lcov.info'
+    )
     const output = path.resolve(
       __dirname,
-      "../coverage",
+      '../coverage',
       `codeclimate.${name}.json`
-    );
+    )
     if (fs.existsSync(lcovInfo)) {
       try {
         await launch({
-          cmds: [cc, "format-coverage", "-t", "lcov", "-o", output, lcovInfo],
+          cmds: [cc, 'format-coverage', '-t', 'lcov', '-o', output, lcovInfo],
           silent: true,
-          stdio: "pipe",
-        });
-        outputs.push(output);
+          stdio: 'pipe'
+        })
+        outputs.push(output)
       } catch (e) {
-        console.error(`Coverage format failed for ${name}`);
+        console.error(`Coverage format failed for ${name}`)
       }
     }
     const junit = path.resolve(
       __dirname,
-      "../",
+      '../',
       projectPath,
-      "reports/junit/test-results.xml"
-    );
+      'reports/junit/test-results.xml'
+    )
     if (fs.existsSync(junit)) {
       const destination = path.resolve(
         __dirname,
-        "../",
+        '../',
         `reports/junit/test-results-${name}.xml`
-      );
+      )
       try {
-        fs.renameSync(junit, destination);
+        fs.renameSync(junit, destination)
       } catch (e) {
-        console.error(e);
-        console.error(`Junit report failed to move from ${name}`);
+        console.error(e)
+        console.error(`Junit report failed to move from ${name}`)
       }
     }
-  });
-  await Promise.all(promises);
-  return outputs;
+  })
+  await Promise.all(promises)
+  return outputs
 }
 
 async function sumCoverage(inputs) {
@@ -75,46 +75,46 @@ async function sumCoverage(inputs) {
       await launch({
         cmds: [
           cc,
-          "sum-coverage",
+          'sum-coverage',
           ...inputs,
-          "-p",
+          '-p',
           inputs.length,
-          "-o",
-          path.resolve(__dirname, "../coverage/codeclimate_total.json"),
+          '-o',
+          path.resolve(__dirname, '../coverage/codeclimate_total.json')
         ],
-        silent: false,
-      });
+        silent: false
+      })
     } catch (e) {
-      console.error(`Coverages failed to merge`);
-      throw e;
+      console.error(`Coverages failed to merge`)
+      throw e
     }
   }
 }
 
 async function uploadCoverage() {
-  const input = path.resolve(__dirname, "../coverage/codeclimate_total.json");
+  const input = path.resolve(__dirname, '../coverage/codeclimate_total.json')
   if (fs.existsSync(input)) {
     try {
       await launch({
-        cmds: [cc, "upload-coverage", "-i", input],
-        silent: false,
-      });
+        cmds: [cc, 'upload-coverage', '-i', input],
+        silent: false
+      })
     } catch (e) {
-      console.error(`Coverages failed to merge`);
-      throw e;
+      console.error(`Coverages failed to merge`)
+      throw e
     }
   }
 }
 
 async function main() {
-  const outputs = await formatCoverage();
-  await sumCoverage(outputs);
-  await uploadCoverage();
+  const outputs = await formatCoverage()
+  await sumCoverage(outputs)
+  await uploadCoverage()
 }
 
 main()
   .then(() => process.exit(0))
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+  .catch(e => {
+    console.error(e)
+    process.exit(1)
+  })

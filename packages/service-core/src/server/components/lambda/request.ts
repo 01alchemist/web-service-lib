@@ -1,6 +1,6 @@
 type QueryParameters = {
-  [key: string]: string;
-};
+  [key: string]: string
+}
 
 export enum RequestStatus {
   SUCCESS,
@@ -9,11 +9,14 @@ export enum RequestStatus {
 }
 
 export type RequestReceipt = {
-  status: RequestStatus;
-  message: string;
-};
+  status: RequestStatus
+  message: string
+}
 
-export function lambdaRequest(req: { query: QueryParameters; queryStringParameters?: QueryParameters }) {
-  req.queryStringParameters = req.query;
-  return req;
+export function lambdaRequest(req: {
+  query: QueryParameters
+  queryStringParameters?: QueryParameters
+}) {
+  req.queryStringParameters = req.query
+  return req
 }

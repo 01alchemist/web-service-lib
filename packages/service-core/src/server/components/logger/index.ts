@@ -1,41 +1,41 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 import {
   createLogger as createLoggerInternal,
   format,
-  transports,
-} from "winston";
+  transports
+} from 'winston'
 
 /**
  * Return custom console logger in development environment.
  * This will paint info, warn and error with distinct bg colors.
  * Also remove graphql query from request body since it's too long and noisy
  */
-const isDev = process.env.NODE_ENV === "development";
-const gray = chalk.bgGray;
-const blue = chalk.bgBlue;
-const red = chalk.bgRed;
-const orange = chalk.bgHex("#FF5E13");
+const isDev = process.env.NODE_ENV === 'development'
+const gray = chalk.bgGray
+const blue = chalk.bgBlue
+const red = chalk.bgRed
+const orange = chalk.bgHex('#FF5E13')
 const colorMap = {
   log: gray,
   info: blue,
   warn: orange,
-  error: red,
-};
+  error: red
+}
 const consoleProxy = new Proxy(console, {
   get(target, property: string) {
     return (data, metadata) => {
-      let meta = metadata;
+      let meta = metadata
       try {
-        meta = JSON.parse(metadata);
+        meta = JSON.parse(metadata)
       } catch (e) {}
-      const c = colorMap[property];
+      const c = colorMap[property]
       if (meta && meta.body && meta.body.query) {
-        meta.body.query = "~~removed bcoz it's too long~~";
+        meta.body.query = "~~removed bcoz it's too long~~"
       }
-      target[property](`${c(` ${property} `)} `, data, ...(meta ? [meta] : []));
-    };
-  },
-});
+      target[property](`${c(` ${property} `)} `, data, ...(meta ? [meta] : []))
+    }
+  }
+})
 
 export const createLogger = (options = {}) =>
   isDev
@@ -45,18 +45,18 @@ export const createLogger = (options = {}) =>
           Object.assign(
             {
               // default options
-              level: "info",
+              level: 'info',
               timestamp: true,
-              colorize: false,
+              colorize: false
             },
             options
           )
         ),
         defaultMeta: { env: process.env.NODE_ENV },
         format:
-          process.env.NODE_ENV !== "development"
+          process.env.NODE_ENV !== 'development'
             ? format.combine(format.timestamp(), format.json())
-            : format.combine(format.colorize(), format.simple()),
-      });
+            : format.combine(format.colorize(), format.simple())
+      })
 
-export const logger = createLogger();
+export const logger = createLogger()

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 export const mock = <Fn extends (...args: any) => any>(value: Fn) =>
-  value as unknown as jest.Mock<ReturnType<Fn>, Parameters<Fn>>
+  (value as unknown) as jest.Mock<ReturnType<Fn>, Parameters<Fn>>
 
 export type MockFn<Fn extends (...args: any) => any> = jest.Mock<
   ReturnType<Fn>,
@@ -23,7 +23,7 @@ export type MockStaticMethod<CLASS extends { new (...args: any): any }> = {
 
 export const mockClass = <CLASS extends { new (...args: any): any }>(
   value: CLASS
-) => value as unknown as MockStaticMethod<CLASS>
+) => (value as unknown) as MockStaticMethod<CLASS>
 
 export const mockInstance = <Instance>(value: Instance) =>
-  value as unknown as MockInstance<Instance>
+  (value as unknown) as MockInstance<Instance>

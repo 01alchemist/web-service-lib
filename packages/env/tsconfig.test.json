@@ -2,19 +2,11 @@
   // Jest TS Config
   "extends": "@apple/ept-core-tools/tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "vitest/globals"
-    ],
+    "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "**/__mocks__/**/*",
-    "__mocks__/*.ts"
-  ],
+  "include": ["src/**/*.ts", "**/__mocks__/**/*", "__mocks__/*.ts"]
 }

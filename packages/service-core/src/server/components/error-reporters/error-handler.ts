@@ -1,30 +1,30 @@
-import { Sentry } from "./sentry";
-import * as SentryTypes from "@sentry/node";
-import { logger } from "../logger";
+import { Sentry } from './sentry'
+import * as SentryTypes from '@sentry/node'
+import { logger } from '../logger'
 
-type Scope = SentryTypes.Scope;
+type Scope = SentryTypes.Scope
 
 export type BaseError = {
-  reason?: any;
-  code?: string | number;
-  response?: any;
-} & Error;
+  reason?: any
+  code?: string | number
+  response?: any
+} & Error
 
 export function reportError(
   error: BaseError,
-  requestId: string = "[Not available]"
+  requestId: string = '[Not available]'
 ) {
-  const { version, platform, arch } = process;
-  const uptime = process.uptime();
+  const { version, platform, arch } = process
+  const uptime = process.uptime()
   const {
-    APP_VERSION = "",
-    RELEASE: release = "",
-    NODE_ENV: environment = "development",
-    BUILD_ENV = "",
-  } = process.env;
+    APP_VERSION = '',
+    RELEASE: release = '',
+    NODE_ENV: environment = 'development',
+    BUILD_ENV = ''
+  } = process.env
 
-  const unknownReason = { message: "Unknown" };
-  const { reason = unknownReason } = error;
+  const unknownReason = { message: 'Unknown' }
+  const { reason = unknownReason } = error
 
   const extras = {
     reason,
@@ -32,15 +32,15 @@ export function reportError(
     platform,
     arch,
     NodeJS: version,
-    port: process.env.NODE_RUNTIME_PORT,
-  };
+    port: process.env.NODE_RUNTIME_PORT
+  }
 
   const tags = {
-    ...(error.code ? { error_code: error.code } : {}),
-  };
+    ...(error.code ? { error_code: error.code } : {})
+  }
 
-  if (environment === "development") {
-    logger.error(error);
+  if (environment === 'development') {
+    logger.error(error)
   } else {
     logger.error(error.message, {
       ...tags,
@@ -51,14 +51,14 @@ export function reportError(
       BUILD_ENV,
       environment,
       stack: error.stack,
-      rawError: error,
-    });
+      rawError: error
+    })
   }
 
   Sentry.configureScope((scope: Scope) => {
-    scope.setFingerprint([reason.message]);
-    scope.setExtras(extras);
-    scope.setTags(tags);
-    Sentry.captureException(error);
-  });
+    scope.setFingerprint([reason.message])
+    scope.setExtras(extras)
+    scope.setTags(tags)
+    Sentry.captureException(error)
+  })
 }

@@ -1,8 +1,6 @@
 {
   "ts-node": {
-    "require": [
-      "tsconfig-paths/register"
-    ]
+    "require": ["tsconfig-paths/register"]
   },
   // Base TS Config Used by VsCode
   "compilerOptions": {
@@ -19,18 +17,11 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "allowJs": true,
-    "lib": [
-      "es2021",
-    ],
+    "lib": ["es2021"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "./dist"
-  ]
+  "exclude": ["node_modules", "./dist"]
 }
