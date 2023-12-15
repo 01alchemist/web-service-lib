@@ -1,0 +1,50 @@
+{
+  "roots": [
+    "../../",
+    "./"
+  ],
+  "transform": {
+    ".(ts|tsx)$": [
+      "ts-jest",
+      {
+        "tsconfig": "./tsconfig.test.json",
+        "diagnostics": false
+      }
+    ]
+  },
+  "clearMocks": true,
+  "testEnvironment": "node",
+  "testRegex": "(/packages/env/.*\\.(test|spec))\\.(ts)$",
+  "modulePathIgnorePatterns": [
+    "node_modules",
+    "dist"
+  ],
+  "verbose": true,
+  "coverageProvider": "v8",
+  "coverageDirectory": "coverage",
+  "coverageThreshold": {
+    "global": {
+      "branches": 100,
+      "functions": 100,
+      "lines": 100,
+      "statements": 100
+    }
+  },
+  "coveragePathIgnorePatterns": [
+    "node_modules",
+    "<rootDir>/src/test-utils.ts"
+  ],
+  "moduleNameMapper": {
+    "@/(.*)": "<rootDir>/src/$1"
+  },
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "reports",
+        "outputName": "test-results.xml"
+      }
+    ]
+  ]
+}

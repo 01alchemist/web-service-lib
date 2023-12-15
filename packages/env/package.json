@@ -1,7 +1,7 @@
 {
   "name": "@01/env",
   "version": "2.0.4",
-  "description": "Nodejs env utils",
+  "description": "Tiny env parser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "repository": "git@github.com:01alchemist/web-service-lib.git",
@@ -16,12 +16,10 @@
     "prettier": "prettier --write '**/*.{js,json,ts,gql,graphql}'",
     "lint": "prettier --check '**/*.{js,json,ts,gql,graphql}'",
     "watch": "nodemon --watch webpack.config.ts ../../scripts/webpack.js -- --config=webpack.config.ts --watch",
-    "build": "NODE_ENV=production node ../../scripts/webpack.js --config=webpack.config.ts",
+    "build": "NODE_ENV=production && tsc -p tsconfig.json && copyfiles package.json ./dist",
     "precommit": "lint-staged",
-    "test": "NODE_ENV=test jest --ci --config=./jest.json --coverage --reporters=default --reporters=jest-junit",
-    "tdd": "NODE_ENV=test jest --config=./jest.json --coverage --watch",
-    "link": "yarn link",
-    "unlink": "yarn unlink",
+    "test": "NODE_ENV=test jest --ci --coverage --reporters=default --reporters=jest-junit --runInBand",
+    "tdd": "NODE_ENV=test jest --coverage --watch",
     "clean": "rm -rf node_modules"
   },
   "lint-staged": {
@@ -30,16 +28,6 @@
       "git add"
     ]
   },
-  "dependencies": {
-    "source-map-support": "^0.5.12",
-    "tslib": "2.0.1"
-  },
-  "devDependencies": {
-    "@01/core-utils": "^2.0.4",
-    "@types/node": "14.11.2",
-    "jest-junit": "11.1.0",
-    "nodemon": "2.0.4",
-    "prettier": "2.1.2"
-  },
+  "dependencies": {},
   "gitHead": "0bcce8606dca97ebe097828c94723a59cd766df4"
 }
