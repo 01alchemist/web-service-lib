@@ -1,33 +1,24 @@
 {
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
+  // App TS Config
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "es2015",
-    "lib": ["dom", "esnext"],
-    "importHelpers": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "rootDir": "./src",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "resolveJsonModule": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "baseUrl": "./src",
+    "module": "es2020",
     "outDir": "./dist",
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
-    },
-    "esModuleInterop": true
-  }
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/index.ts",
+    "src/bump-deployment.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "./dist",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
