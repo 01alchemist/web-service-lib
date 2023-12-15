@@ -5,8 +5,6 @@
 const U = undefined as unknown
 type U = undefined
 
-//@ts-nocheck
-import processEnv from 'process.env'
 import { isNode } from './runtime'
 
 export function env(name: string, defaultValue?: string) {
@@ -14,9 +12,7 @@ export function env(name: string, defaultValue?: string) {
   if (isNode) {
     value = process.env[name]
   } else {
-    const dynamicEnvValue = window.ENV && window.ENV[name] // This is loaded from /public/env-conf.js
-    const staticEnvValue = processEnv[name] // This one is static & will be generated during compile time
-    value = dynamicEnvValue !== undefined ? dynamicEnvValue : staticEnvValue
+    value = window.ENV && window.ENV[name]
   }
   return value !== undefined ? value : defaultValue
 }
