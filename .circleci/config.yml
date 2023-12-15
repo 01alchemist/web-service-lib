@@ -97,7 +97,4 @@ jobs:
             - ./packages/*/dist
       - run: git config --global user.email "01@01alchemist.com"
       - run: git config --global user.name "Nidin Vinayakan"
-      - run:
-          lerna publish --force-git-tag --create-release=github
-          --conventional-commits --conventional-graduate --yes
-          --github-token=$GITHUB_TOKEN
+      - run: npm run publish
