@@ -9,10 +9,10 @@ import { isNode } from './runtime'
 
 export function env(name: string, defaultValue?: string) {
   let value
-  if (isNode) {
-    value = process.env[name]
-  } else {
+  if (!isNode && typeof window !== "undefined" && window.ENV) {
     value = window.ENV && window.ENV[name]
+  } else if (typeof process !== "undefined" && process.env) {
+    value = process.env[name]
   }
   return value !== undefined ? value : defaultValue
 }
