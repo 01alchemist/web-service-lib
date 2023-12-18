@@ -1,6 +1,6 @@
 {
   "name": "@01/env",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "A tiny env parser for nodejs and browser",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

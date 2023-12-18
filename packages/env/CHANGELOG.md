@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.1.2...@01/env@2.2.0) (2023-12-18)
+
+
+### Bug Fixes
+
+* unit tests fixed ([8ab91a7](https://github.com/01alchemist/web-service-lib/commit/8ab91a78ff1a301483bdd7e08f95fd9bdd949cf9))
+
+
+### Features
+
+* **env:** process.env virtual module removed ([a8df2b1](https://github.com/01alchemist/web-service-lib/commit/a8df2b16b7bbe1f665c11a7cdab99f7f77361b0d))
+
+
+
+
+
 ## [2.1.2](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.1.0...@01/env@2.1.2) (2023-12-15)
 
 **Note:** Version bump only for package @01/env
