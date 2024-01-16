@@ -183,7 +183,7 @@ describe('NodeJS env test suite', () => {
     describe('When accessing undefined value', () => {
       it('Should return default value', () => {
         delete process.env.SOME_BOOLEAN_VAR
-        expect(envFloat('SOME_BOOLEAN_VAR', true)).toBe(true)
+        expect(envBoolean('SOME_BOOLEAN_VAR', true)).toBe(true)
       })
     })
     describe('When accessing `true` string from envBoolean', () => {

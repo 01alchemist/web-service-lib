@@ -2,37 +2,56 @@
 /**
  * Created by n.vinayakan on 06.06.17.
  */
-const U = undefined as unknown
-type U = undefined
-
 import { isNode } from './runtime'
 
-export function env(name: string, defaultValue?: string) {
+type DefaultReturnType<T, U> = T extends U ? T : undefined
+
+export function env<T extends string | undefined>(
+  name: string,
+  defaultValue?: T
+) {
   let value
   if (!isNode && typeof window !== 'undefined' && window.ENV) {
     value = window.ENV && window.ENV[name]
   } else if (typeof process !== 'undefined' && process.env) {
     value = process.env[name]
   }
-  return value !== undefined ? value : defaultValue
+  return value !== undefined
+    ? value
+    : (defaultValue as DefaultReturnType<T, string>)
 }
 
-export function envInt<T = U>(name: string, defaultValue: T = U as T) {
+export function envInt<T extends number | undefined>(
+  name: string,
+  defaultValue?: T
+) {
   const envValue = env(name)
-  return envValue ? parseInt(envValue) : defaultValue
+  return envValue
+    ? parseInt(envValue)
+    : (defaultValue as DefaultReturnType<T, number>)
 }
 
-export function envFloat<T = U>(name: string, defaultValue: T = U as T) {
+export function envFloat<T extends number | undefined>(
+  name: string,
+  defaultValue?: T
+) {
   const envValue = env(name)
-  return envValue ? parseFloat(envValue) : defaultValue
+  return envValue
+    ? parseFloat(envValue)
+    : (defaultValue as DefaultReturnType<T, number>)
 }
-export function envBoolean<T = U>(name: string, defaultValue: T = U as T) {
+
+export function envBoolean<T extends boolean | undefined>(
+  name: string,
+  defaultValue?: T
+) {
   const envValue = env(name)
   return envValue
     ? envValue.toLowerCase() === 'true' || envValue === '1'
-    : defaultValue
+    : (defaultValue as DefaultReturnType<T, boolean>)
 }
-export function envJson<T = U>(name: string, defaultValue: T = U as T): any {
+
+export function envJson(name: string, defaultValue?: any): any {
   const envValue = env(name)
   if (envValue) {
     try {
