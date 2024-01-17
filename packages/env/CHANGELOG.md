@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.2.1...@01/env@2.2.2) (2024-01-17)
+
+
+### Bug Fixes
+
+* **env:** importHelpers removed ([fbecdb0](https://github.com/01alchemist/web-service-lib/commit/fbecdb0a204ece0ba4b56a10cec8dad648ec262a))
+
+
+
+
+
 ## [2.2.1](https://github.com/01alchemist/web-service-lib/compare/@01/env@2.2.0...@01/env@2.2.1) (2024-01-16)
 
 
